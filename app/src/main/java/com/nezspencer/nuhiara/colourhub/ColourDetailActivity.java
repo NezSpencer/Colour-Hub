@@ -1,11 +1,12 @@
 package com.nezspencer.nuhiara.colourhub;
 
 import android.content.Context;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -81,6 +82,21 @@ public class ColourDetailActivity extends AppCompatActivity {
             NavUtils.navigateUpTo(this, new Intent(this, ColourListActivity.class));
             return true;
         }
+
+        if (id==R.id.rate)
+        {
+            final String packageName=context.getPackageName();
+            try{
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("" +
+                        "market://details?id=" + packageName)));
+            }
+            catch (android.content.ActivityNotFoundException e)
+            {
+                startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("" +
+                        "https://play.google.com/store/apps/details?="+packageName)));
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
     public Intent createShareIntent()

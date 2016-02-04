@@ -1,8 +1,6 @@
 package com.nezspencer.nuhiara.colourhub.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,15 +42,19 @@ public class SpinnerAdapter extends ArrayAdapter<DummyContent.DummyItem> {
 
     public View getCustomView(int position,View custom,ViewGroup parent)
     {
+        View view;
         if (custom==null)
         {
-            custom= LayoutInflater.from(context).inflate(R.layout.spinner_item,parent,false);
+            view= LayoutInflater.from(context).inflate(R.layout.spinner_item,parent,false);
         }
+        else
+            view=custom;
 
-        CardView cardView=(CardView)custom.findViewById(R.id.spinner_card);
-        cardView.setCardBackgroundColor(items.get(position).color);
+        /*CardView cardView=(CardView)view.findViewById(R.id.spinner_card);
+        cardView.setCardBackgroundColor(getItem(position).color);*/
+        view.setBackgroundResource(items.get(position).color);
         Log.e("color set: "," "+items.get(position).color_name);
 
-        return custom;
+        return view;
     }
 }

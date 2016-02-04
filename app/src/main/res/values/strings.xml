@@ -50,6 +50,19 @@
     </string-array>
 -->
 
+    <string-array name="black">
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+        <item>000000</item>
+    </string-array>
+
     <string-array name="red">
         <item>FFEBEE</item>
         <item>FFCDD2</item>
@@ -316,7 +329,7 @@
         <item>263238</item>
     </string-array>
 
-    <string-array name="alpha_level">
+    <string-array name="color_codes">
         <item>00</item>
         <item>01</item>
         <item>02</item>

@@ -2,20 +2,14 @@ package com.nezspencer.nuhiara.colourhub;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v7.widget.ShareActionProvider;
-import android.widget.Toast;
-
-import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
 
 
 /**
@@ -44,7 +38,7 @@ public class ColourListActivity extends AppCompatActivity
     public static final String INTENT_EXTRA="extra";
     private boolean mTwoPane;
     private ShareActionProvider actionProvider;
-    private int color[]={
+    /*private int color[]={
             R.color.red,
             R.color.pink,
             R.color.purple,
@@ -65,7 +59,7 @@ public class ColourListActivity extends AppCompatActivity
             R.color.grey,
             R.color.blue_grey,
             R.color.black
-    };
+    };*/
 
     private Toolbar toolbar;
     private String[] colour_name;
@@ -73,8 +67,8 @@ public class ColourListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        colour_name=getResources().getStringArray(R.array.color_names);
-        new colorLoader().execute();
+        /*colour_name=getResources().getStringArray(R.array.color_names);
+        new colorLoader().execute();*/
 
         setContentView(R.layout.activity_colour_list);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -90,7 +84,7 @@ public class ColourListActivity extends AppCompatActivity
 
 
 
-        Log.e("arraySize", " " + colour_name.length);
+        /*Log.e("arraySize", " " + colour_name.length);*/
         if (findViewById(R.id.colour_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -153,6 +147,20 @@ public class ColourListActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
+        if (item.getItemId()==R.id.rate)
+        {
+            final String packageName=context.getPackageName();
+            try{
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("" +
+                        "market://details?id="+packageName)));
+            }
+            catch (android.content.ActivityNotFoundException e)
+            {
+                startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("" +
+                        "https://play.google.com/store/apps/details?="+packageName)));
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -175,7 +183,7 @@ public class ColourListActivity extends AppCompatActivity
         return false;
     }
 
-    class  colorLoader extends AsyncTask<Void,Void,Void>{
+    /*class  colorLoader extends AsyncTask<Void,Void,Void>{
         @Override
         protected Void doInBackground(Void... params) {
 
@@ -187,5 +195,5 @@ public class ColourListActivity extends AppCompatActivity
             }
             return null;
         }
-    }
+    }*/
 }

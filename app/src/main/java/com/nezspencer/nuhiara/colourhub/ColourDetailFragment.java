@@ -3,13 +3,11 @@ package com.nezspencer.nuhiara.colourhub;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -17,9 +15,6 @@ import android.widget.TextView;
 
 import com.nezspencer.nuhiara.colourhub.adapter.SpinnerAdapter;
 import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A fragment representing a single Colour detail screen.
@@ -48,10 +43,11 @@ public class ColourDetailFragment extends Fragment {
 
     SeekBar alphaSeekBar;
     SeekBar ColorSeekBar;
-    CardView backLayout;
+    LinearLayout backLayout;
     LinearLayout fore_layout;
     TextView argb_color;
     TextView rgb_color;
+    boolean isBlack;
     /**
      * The dummy content this fragment is presenting.
      */
@@ -175,7 +171,8 @@ public class ColourDetailFragment extends Fragment {
 
         else
         {
-            colorShades=getResources().getStringArray(R.array.blue);
+            isBlack=true;
+            colorShades=getResources().getStringArray(R.array.black);
         }
         T_color=colorShades[6];
         A_color=alpha_level[0];
@@ -189,17 +186,26 @@ public class ColourDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_colour_detail, container, false);
         alphaSeekBar=(SeekBar)rootView.findViewById(R.id.alpha_level);
         ColorSeekBar=(SeekBar)rootView.findViewById(R.id.colorIntensity);
-        backLayout=(CardView)rootView.findViewById(R.id.back_layout);
+        backLayout=(LinearLayout)rootView.findViewById(R.id.back_layout);
         fore_layout=(LinearLayout)rootView.findViewById(R.id.fore_layout);
         argb_color=(TextView)rootView.findViewById(R.id.argb_color);
         rgb_color=(TextView)rootView.findViewById(R.id.rgb_color);
         spinner=(Spinner)rootView.findViewById(R.id.spinner);
+        if (isBlack)
+            ColorSeekBar.setEnabled(false);
         displayColorCode();
-        SpinnerAdapter spinnerAdapter=new SpinnerAdapter(getActivity(),DummyContent.ITEMS);
+        /*ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity(),R.array.color_names,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        */
+        //SpinnerAdapter spinnerAdapter=new SpinnerAdapter(getActivity(),DummyContent.ITEMS);
+
+        spinner.setAdapter(new SpinnerAdapter(getActivity(),DummyContent.ITEMS));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /*backLayout.setCardBackgroundColor(DummyContent.ITEMS.get(position).color);*/
+                backLayout.setBackgroundColor(DummyContent.ITEMS.get(position).color);
+                Log.e("backLayout_color set:"," "+DummyContent.ITEMS.get(position).color_name);
             }
 
             @Override
@@ -207,8 +213,6 @@ public class ColourDetailFragment extends Fragment {
 
             }
         });
-        spinner.setAdapter(spinnerAdapter);
-
 
         ColorSeekBar.setProgress(60);
 
@@ -218,7 +222,7 @@ public class ColourDetailFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-                if (fromUser) {
+                //if (fromUser) {
 
                     int startPos;
                     startPos = (initalColorSeekBarPosition <= 10 ? 0 : ((initalColorSeekBarPosition / 10) - 1));
@@ -238,7 +242,7 @@ public class ColourDetailFragment extends Fragment {
                     {
                         getSeekBarChange(seekBar.getKeyProgressIncrement(), isForward, startPos);
                     }
-                }
+                //}
             }
 
             @Override
@@ -250,6 +254,7 @@ public class ColourDetailFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 T_color=colorShades[seekBar.getProgress() <= 10 ? 0 : (seekBar.getProgress() / 10) - 1];
+                displayColorCode();
                 fore_layout.setBackgroundColor(stringToColor(computeColor()));
 
 
@@ -289,6 +294,8 @@ public class ColourDetailFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 A_color=alpha_level[seekBar.getProgress()];
+                Log.e("ttt"," "+A_color);
+                displayColorCode();
                 fore_layout.setBackgroundColor(stringToColor(computeColor()));
             }
         });
