@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -75,6 +76,7 @@ public class ColourListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         if (getSupportActionBar()!=null)
         {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setIcon(R.mipmap.ic_launcher);
             getSupportActionBar().setTitle(R.string.app_name);
@@ -160,6 +162,11 @@ public class ColourListActivity extends AppCompatActivity
                         "https://play.google.com/store/apps/details?="+packageName)));
             }
         }
+        if (item.getItemId()==android.R.id.home)
+        {
+            NavUtils.navigateUpTo(this,new Intent(this,ColourHub.class));
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -167,7 +174,7 @@ public class ColourListActivity extends AppCompatActivity
     public Intent createShareIntent()
     {
         Intent shareIntent=new Intent(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this cool color App: \n" +
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this colour app: \n" +
                 "http://play.google.com/store/apps/details?id=" + context.getPackageName());
 
         shareIntent.setType("text/plain");

@@ -1,57 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@drawable/images"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <com.nezspencer.nuhiara.colourhub.helper.Typewriter
+        android:id="@+id/titleText"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#9b000000">
+        android:layout_height="wrap_content"
+        android:textSize="60sp"
+        android:gravity="center" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/hub_logo">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#9b000000">
-
-                <Button
-                    android:layout_centerInParent="true"
-                    android:id="@+id/main_button"
-                    android:text="click to begin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_above="@+id/main_button"
-                    android:text="Use predefined colours"
-                    android:visibility="gone"
-                    android:id="@+id/colour_list_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/main_button"
-                    android:text="Make your own colours"
-                    android:visibility="gone"
-                    android:id="@+id/color_mix_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
-
-        </LinearLayout>
-
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>

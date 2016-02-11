@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,7 +22,7 @@ import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
  * in two-pane mode (on tablets) or a {@link ColourDetailActivity}
  * on handsets.
  */
-public class ColourDetailFragment extends Fragment {
+public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarChangeListener{
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -43,8 +43,8 @@ public class ColourDetailFragment extends Fragment {
 
     SeekBar alphaSeekBar;
     SeekBar ColorSeekBar;
-    LinearLayout backLayout;
-    LinearLayout fore_layout;
+    FrameLayout backLayout;
+    FrameLayout fore_layout;
     TextView argb_color;
     TextView rgb_color;
     boolean isBlack;
@@ -186,26 +186,22 @@ public class ColourDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_colour_detail, container, false);
         alphaSeekBar=(SeekBar)rootView.findViewById(R.id.alpha_level);
         ColorSeekBar=(SeekBar)rootView.findViewById(R.id.colorIntensity);
-        backLayout=(LinearLayout)rootView.findViewById(R.id.back_layout);
-        fore_layout=(LinearLayout)rootView.findViewById(R.id.fore_layout);
+        backLayout=(FrameLayout)rootView.findViewById(R.id.back_layout);
+        fore_layout=(FrameLayout)rootView.findViewById(R.id.fore_layout);
         argb_color=(TextView)rootView.findViewById(R.id.argb_color);
         rgb_color=(TextView)rootView.findViewById(R.id.rgb_color);
         spinner=(Spinner)rootView.findViewById(R.id.spinner);
+        ColorSeekBar.setMax(colorShades.length-1);
         if (isBlack)
             ColorSeekBar.setEnabled(false);
         displayColorCode();
-        /*ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity(),R.array.color_names,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        */
-        //SpinnerAdapter spinnerAdapter=new SpinnerAdapter(getActivity(),DummyContent.ITEMS);
 
-        spinner.setAdapter(new SpinnerAdapter(getActivity(),DummyContent.ITEMS));
+        spinner.setAdapter(new SpinnerAdapter(getActivity(), DummyContent.ITEMS));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 backLayout.setBackgroundColor(DummyContent.ITEMS.get(position).color);
-                Log.e("backLayout_color set:"," "+DummyContent.ITEMS.get(position).color_name);
+                Log.e("backLayout_color set:", " " + DummyContent.ITEMS.get(position).color_name);
             }
 
             @Override
@@ -213,92 +209,12 @@ public class ColourDetailFragment extends Fragment {
 
             }
         });
+        alphaSeekBar.setMax(alpha_level.length - 1);
 
-        ColorSeekBar.setProgress(60);
+        ColorSeekBar.setProgress(colorShades.length/2);
 
-        alphaSeekBar.setMax(alpha_level.length-1);
-
-        ColorSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                //if (fromUser) {
-
-                    int startPos;
-                    startPos = (initalColorSeekBarPosition <= 10 ? 0 : ((initalColorSeekBarPosition / 10) - 1));
-                    boolean isForward = true; // when true it means the user is dragging seekBar forward
-                    if (seekBar.getKeyProgressIncrement() - initalColorSeekBarPosition < 0) // backwards seek
-                    {
-
-                        isForward = false;
-                        getSeekBarChange(seekBar.getKeyProgressIncrement(), isForward, startPos);
-
-                    } else if (seekBar.getKeyProgressIncrement() - initalColorSeekBarPosition > 0) //forward seek
-                    {
-
-                        isForward = true;
-                        getSeekBarChange(seekBar.getKeyProgressIncrement(), isForward, startPos);
-                    } else //same position
-                    {
-                        getSeekBarChange(seekBar.getKeyProgressIncrement(), isForward, startPos);
-                    }
-                //}
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                initalColorSeekBarPosition = seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                T_color=colorShades[seekBar.getProgress() <= 10 ? 0 : (seekBar.getProgress() / 10) - 1];
-                displayColorCode();
-                fore_layout.setBackgroundColor(stringToColor(computeColor()));
-
-
-            }
-        });
-
-        alphaSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-               // T_color="#"+T_color.substring(1);
-                boolean isFront=false;
-                if (seekBar.getKeyProgressIncrement()-initialAlphaSeekBarPosition<0)
-                {
-                    isFront=false;
-                    changeTransparency(seekBar.getKeyProgressIncrement(),isFront,initialAlphaSeekBarPosition);
-                }
-                else if (seekBar.getKeyProgressIncrement()-initialAlphaSeekBarPosition>0)
-                {
-                    isFront=true;
-                    changeTransparency(seekBar.getKeyProgressIncrement(),isFront,initialAlphaSeekBarPosition);
-                }
-                else
-                {
-
-                    changeTransparency(seekBar.getKeyProgressIncrement(),isFront,initialAlphaSeekBarPosition);
-                }
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-                initialAlphaSeekBarPosition=seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                A_color=alpha_level[seekBar.getProgress()];
-                Log.e("ttt"," "+A_color);
-                displayColorCode();
-                fore_layout.setBackgroundColor(stringToColor(computeColor()));
-            }
-        });
+        ColorSeekBar.setOnSeekBarChangeListener(this);
+        alphaSeekBar.setOnSeekBarChangeListener(this);
 
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
@@ -309,153 +225,13 @@ public class ColourDetailFragment extends Fragment {
         return rootView;
     }
 
-    public void getSeekBarChange(int change,boolean isForward,int initalSeekBarPosition){
-
-
-        if (change<=10){
-
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition];
-            }
-            else {
-                T_color =  colorShades[initalSeekBarPosition];
-            }
-
-
-        }
-        else if (change<=20)
-        {
-
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+1];
-            }
-            else {
-                T_color = colorShades[initalSeekBarPosition-1];
-            }
-
-        }
-        else if (change<=30)
-        {
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+2];
-            }
-            else {
-                T_color = colorShades[initalSeekBarPosition-2];
-            }
-
-        }
-        else if (change<=40)
-        {
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+3];
-            }
-            else {
-                T_color = colorShades[initalSeekBarPosition-3];
-            }
-
-        }
-        else if (change<=50)
-        {
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+4];
-            }
-            else {
-                T_color = colorShades[initalSeekBarPosition-4];
-            }
-
-        }
-        else if (change<=60)
-        {
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+5];
-            }
-            else {
-                T_color = colorShades[initalSeekBarPosition-5];
-
-            }
-
-        }
-        else if (change<=70)
-        {
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+6];
-            }
-            else {
-                T_color =colorShades[initalSeekBarPosition-6];
-            }
-
-        }
-        else if (change<=80)
-        {
-            if (isForward)
-            {
-                T_color = colorShades[initalSeekBarPosition+7];
-            }
-            else {
-                T_color =colorShades[initalSeekBarPosition-7];
-            }
-
-        }
-        else if (change<=90)
-        {
-            if (isForward)
-            {
-                T_color =colorShades[initalSeekBarPosition+8];
-            }
-            else {
-                T_color = colorShades[initalSeekBarPosition-8];
-            }
-
-        }
-        else { //change is frm 91-100
-            if (isForward)
-            {
-                T_color =colorShades[initalSeekBarPosition+9];
-
-            }
-            else {
-                T_color =colorShades[initalSeekBarPosition-9];
-
-
-            }
-        }
-        fore_layout.setBackgroundColor(stringToColor(computeColor()));
-        displayColorCode();
-
-    }
 
     public Integer stringToColor(String colorString)
     {
         return Color.parseColor(colorString);
     }
 
-    public void changeTransparency(int change,boolean isForward,int initalSeekBarPosition)
-    {
 
-        if (isForward)
-        {
-
-            Log.e("color"," "+SUM_color);
-            A_color=alpha_level[initalSeekBarPosition+change];
-
-
-        }
-        else {
-            A_color=alpha_level[initalSeekBarPosition-change];
-
-
-        }
-        fore_layout.setBackgroundColor(stringToColor(computeColor()));
-        displayColorCode();
-
-    }
     public String computeColor()
     {
         return "#"+A_color+T_color;
@@ -465,5 +241,26 @@ public class ColourDetailFragment extends Fragment {
     {
         rgb_color.setText("#"+T_color);
         argb_color.setText(computeColor());
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        if (seekBar.getId()==R.id.colorIntensity)
+            T_color=colorShades[progress];
+        else
+            A_color=alpha_level[progress];
+        fore_layout.setBackgroundColor(stringToColor(computeColor()));
+        displayColorCode();
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+
     }
 }

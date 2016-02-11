@@ -47,7 +47,10 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
     private static String B_string=null;
     private List<String>colorCodes;
     int size;
-
+    static int A_colour=255;
+    static int R_colour=0;
+    static int G_colour=0;
+    static int B_colour=0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,7 +99,8 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         backgroundColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                backLayout.setBackgroundColor(DummyContent.ITEMS.get(position).color);
+                /*backLayout.setBackgroundColor(DummyContent.ITEMS.get(position).color);
+                backLayout.requestLayout();*/
             }
 
             @Override
@@ -104,6 +108,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
 
             }
         });
+
 
 
         return view;
@@ -201,14 +206,32 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         final String blue="blue";
 
         if (seekBar.getId()==R.id.colorA)
-            getStringEquivalent(size-progress,alpha);
-        else if (seekBar.getId()==R.id.colorR)
-            getStringEquivalent(progress,red);
-        else if (seekBar.getId()==R.id.colorG)
-            getStringEquivalent(progress,green);
-        else
-            getStringEquivalent(progress,blue);
+        {
+            A_colour=size-progress;
+            A_string=intToHex(size-progress);
+            //getStringEquivalent(size-progress,alpha);
+        }
 
+        else if (seekBar.getId()==R.id.colorR)
+        {
+            R_string=intToHex(progress);
+            //getStringEquivalent(progress,red);
+            R_colour=progress;
+        }
+        else if (seekBar.getId()==R.id.colorG) {
+            G_string=intToHex(progress);
+            G_colour=progress;
+            //getStringEquivalent(progress,green);
+        }
+        else
+        {
+            B_string=intToHex(progress);
+            B_colour=progress;
+            //getStringEquivalent(progress,blue);
+        }
+
+        screenLayout.setBackgroundColor(Color.argb(A_colour,R_colour,G_colour,B_colour));
+        displayColorCode();
     }
 
     @Override
@@ -220,6 +243,8 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
     public void onStopTrackingTouch(SeekBar seekBar) {
 
     }
+
+    public String intToHex(int i) {return String.format("%02x",i & 0xFF);}
 
     public void extractColorString(String colorString)
     {
@@ -278,6 +303,10 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
             renderButton.setIndeterminateProgressMode(false);
             renderButton.setProgress(100);
             screenLayout.setBackgroundColor(Color.parseColor(aVoid));
+            /*screenLayout.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            screenLayout.setAlpha(1);
+            screenLayout.setBackgroundColor(Color.GREEN);
+            backLayout.setBackgroundColor(Color.BLUE);*/
             inputColor.setFocusable(false);
             extractColorString(aVoid);
         }

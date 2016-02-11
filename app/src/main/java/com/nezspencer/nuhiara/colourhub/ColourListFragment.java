@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.nezspencer.nuhiara.colourhub.adapter.ColourListAdapter;
@@ -22,6 +21,7 @@ import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
 public class ColourListFragment extends ListFragment {
 
 
+    ColourListAdapter adapter;
     /**
      * The serialization (saved instance state) Bundle key representing the
      * activated item position. Only used on tablets.
@@ -72,8 +72,8 @@ public class ColourListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        setListAdapter(new ColourListAdapter(getActivity(), DummyContent.ITEMS));
+        adapter=new ColourListAdapter(getActivity(), DummyContent.ITEMS);
+        setListAdapter(adapter);
     }
 
     @Override
@@ -135,6 +135,13 @@ public class ColourListFragment extends ListFragment {
         getListView().setChoiceMode(activateOnItemClick
                 ? ListView.CHOICE_MODE_SINGLE
                 : ListView.CHOICE_MODE_NONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
     }
 
     private void setActivatedPosition(int position) {
