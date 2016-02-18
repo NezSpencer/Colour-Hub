@@ -3,14 +3,21 @@ package com.nezspencer.nuhiara.colourhub;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +33,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 public class ColourHub extends AppCompatActivity {
 
     private static int dimension=0;
+    private static final int IMAGE_PIX =6 ;
     private String[] colour_name;
     private int color[]={
             R.color.red,
@@ -107,8 +115,8 @@ public class ColourHub extends AppCompatActivity {
         makeUrs.setText("Make \n your own\n colour");
         makeUrs.setTextSize(12);
         makeUrs.setTextColor(Color.WHITE);
-        ImageView share=new ImageView(this);
-        share.setImageResource(R.drawable.ic_action_share);
+        ImageView capture=new ImageView(this);
+        capture.setImageResource(R.drawable.ic_action_camera);
         ImageView rateView=new ImageView(this);
         rateView.setImageResource(R.drawable.ic_action_favorite);
 
@@ -120,7 +128,7 @@ public class ColourHub extends AppCompatActivity {
         predefinedColourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ColourHub.this,ColourListActivity.class));
+                startActivity(new Intent(ColourHub.this, ColourListActivity.class));
             }
         });
 
@@ -135,6 +143,21 @@ public class ColourHub extends AppCompatActivity {
                 startActivity(new Intent(ColourHub.this, ColorMixActivity.class));
             }
         });
+
+        SubActionButton CaptureColourButton=builder.setContentView(capture)
+                .build();
+
+        CaptureColourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                if (captureIntent.resolveActivity(getPackageManager())!=null)
+                    startActivityForResult(captureIntent,IMAGE_PIX);
+            }
+        });
+
         SubActionButton rateButton=builder.setContentView(rateView)
                 .setBackgroundDrawable(getResources().getDrawable(R.drawable.action_menu_red))
                 .build();
@@ -156,28 +179,14 @@ public class ColourHub extends AppCompatActivity {
             }
         });
 
-        SubActionButton shareButton=builder.setContentView(share)
-                .setBackgroundDrawable(getResources().getDrawable(R.drawable.action_menu_grey))
-                .setTheme(SubActionButton.THEME_DARKER)
-                .build();
 
-        shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this colour app: \n" +
-                        "https://play.google.com/store/apps/details?=" + context.getPackageName());
-                shareIntent.setType("text/plain");
-                startActivityForResult(shareIntent, 9);
-            }
-        });
 
 
         FloatingActionMenu actionMenu=new FloatingActionMenu.Builder(this)
                 .addSubActionView(predefinedColourButton)
                 .addSubActionView(makeUrColour)
                 .addSubActionView(rateButton)
-                .addSubActionView(shareButton)
+                .addSubActionView(CaptureColourButton)
                 .setRadius(radius)
                 .attachTo(fab)
                 .build();
@@ -195,6 +204,70 @@ public class ColourHub extends AppCompatActivity {
                 DummyContent.addItem(new DummyContent.DummyItem(color[i],colour_name[i]));
             }
             return null;
+        }
+    }
+
+    public String intToHex(int i) {return String.format("%02x",i & 0xFF);}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode==IMAGE_PIX && resultCode==RESULT_OK)
+        {
+            Bundle imageData=data.getExtras();
+            Bitmap snappedImage=(Bitmap)imageData.get("data");
+
+            View view=getLayoutInflater().inflate(R.layout.image_preview,null,false);
+            final ImageView preview=(ImageView)view.findViewById(R.id.imagePreview);
+            final TextView colourCode=(TextView)view.findViewById(R.id.preview_colour_code);
+            ImageButton cancel=(ImageButton)view.findViewById(R.id.discard);
+
+            final AlertDialog imagePopUp=new AlertDialog.Builder(this)
+                    .setView(view)
+                    .setCancelable(false)
+                    .create();
+            cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    preview.setImageBitmap(null);
+                    imagePopUp.cancel();
+                    imagePopUp.dismiss();
+                }
+            });
+
+                preview.setImageBitmap(snappedImage);
+
+
+            preview.setOnTouchListener(new ImageView.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+                    ImageView imageView = (ImageView) v;
+                    Bitmap touchedPart = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+
+                    if (x < touchedPart.getWidth() && x >= 0 && y < touchedPart.getHeight() && y >= 0) {
+
+                        int pixel = touchedPart.getPixel(x, y);
+
+                        String alpha = intToHex(Color.red(pixel));
+                        String red = intToHex(Color.red(pixel));
+                        String green = intToHex(Color.green(pixel));
+                        String blue = intToHex(Color.blue(pixel));
+
+                        colourCode.setText("#" + alpha + red + green + blue);
+
+                        return true;
+                    }
+
+                    return false;
+                }
+            });
+            imagePopUp.getWindow().setBackgroundDrawable(new ColorDrawable(
+                    Color.TRANSPARENT));
+            imagePopUp.show();
         }
     }
 }

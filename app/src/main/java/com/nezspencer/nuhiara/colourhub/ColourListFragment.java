@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nezspencer.nuhiara.colourhub.adapter.ColourListAdapter;
 import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
@@ -142,6 +143,9 @@ public class ColourListFragment extends ListFragment {
         super.onResume();
 
         adapter.notifyDataSetChanged();
+        setListAdapter(adapter);
+        if (DummyContent.ITEMS.isEmpty())
+            Toast.makeText(getActivity(),"BUG!!!\n No colours to add :(",Toast.LENGTH_LONG).show();
     }
 
     private void setActivatedPosition(int position) {

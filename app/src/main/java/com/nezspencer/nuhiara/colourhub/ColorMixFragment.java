@@ -1,10 +1,16 @@
 package com.nezspencer.nuhiara.colourhub;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,10 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 import com.nezspencer.nuhiara.colourhub.adapter.SpinnerAdapter;
@@ -30,6 +40,7 @@ import java.util.List;
  */
 public class ColorMixFragment extends Fragment implements View.OnClickListener,SeekBar.OnSeekBarChangeListener {
 
+    private static final int IMAGE_PIX =6 ;
     private SeekBar A_seekbar;
     private SeekBar R_seekBar;
     private SeekBar G_seekbar;
@@ -40,7 +51,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
     private TextView argbColor;
     private Spinner backgroundColorSpinner;
     private LinearLayout screenLayout;
-    private LinearLayout backLayout;
+    private CardView backLayout;
     private static String A_string=null;
     private static String R_string=null;
     private static String G_string=null;
@@ -66,6 +77,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         View view=inflater.inflate(R.layout.fragment_colour_mix,container,false);
         findAllViews(view);
         displayColorCode();
+
         screenLayout.setBackgroundColor(stringToColor(computeColor()));
         renderButton.setOnClickListener(this);
         A_seekbar.setMax(size);
@@ -99,8 +111,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         backgroundColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                /*backLayout.setBackgroundColor(DummyContent.ITEMS.get(position).color);
-                backLayout.requestLayout();*/
+
             }
 
             @Override
@@ -128,7 +139,8 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         argbColor=(TextView)view.findViewById(R.id.argb_color);
         backgroundColorSpinner=(Spinner)view.findViewById(R.id.spinner);
         screenLayout=(LinearLayout)view.findViewById(R.id.fore_layout);
-        backLayout=(LinearLayout)view.findViewById(R.id.back_layout);
+        backLayout=(CardView)view.findViewById(R.id.back_layout);
+
     }
 
     @Override
@@ -200,10 +212,6 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-        final String alpha="alpha";
-        final String red="red";
-        final String green="green";
-        final String blue="blue";
 
         if (seekBar.getId()==R.id.colorA)
         {
@@ -311,4 +319,6 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
             extractColorString(aVoid);
         }
     }
+
+
 }
