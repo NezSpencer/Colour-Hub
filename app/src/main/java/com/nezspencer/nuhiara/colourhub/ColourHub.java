@@ -21,7 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
+import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 import com.nezspencer.nuhiara.colourhub.helper.Typewriter;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
@@ -32,6 +32,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
  */
 public class ColourHub extends AppCompatActivity {
 
+    private ApplicationVariables applicationVariables;
     private static int dimension=0;
     private static final int IMAGE_PIX =6 ;
     private String[] colour_name;
@@ -62,8 +63,8 @@ public class ColourHub extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        applicationVariables=ApplicationVariables.getInstance();
         colour_name=getResources().getStringArray(R.array.color_names);
-        new colorLoader().execute();
         setContentView(R.layout.hub);
         context=this.getApplicationContext();
         Typewriter titleText=(Typewriter)findViewById(R.id.titleText);
@@ -193,19 +194,6 @@ public class ColourHub extends AppCompatActivity {
 
     }
 
-    class  colorLoader extends AsyncTask<Void,Void,Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            DummyContent.clearAll();
-            for (int i=0; i<colour_name.length; i++)
-            {
-
-                DummyContent.addItem(new DummyContent.DummyItem(color[i],colour_name[i]));
-            }
-            return null;
-        }
-    }
 
     public String intToHex(int i) {return String.format("%02x",i & 0xFF);}
 

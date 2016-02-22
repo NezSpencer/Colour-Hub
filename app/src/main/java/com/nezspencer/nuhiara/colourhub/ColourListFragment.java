@@ -8,7 +8,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.nezspencer.nuhiara.colourhub.adapter.ColourListAdapter;
-import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
+import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 
 /**
  * A list fragment representing a list of Colours. This fragment
@@ -73,7 +73,7 @@ public class ColourListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter=new ColourListAdapter(getActivity(), DummyContent.ITEMS);
+        adapter=new ColourListAdapter(getActivity(), ApplicationVariables.getInstance().ITEMS);
         setListAdapter(adapter);
     }
 
@@ -114,7 +114,9 @@ public class ColourListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).color_name,DummyContent.ITEMS.get(position).color);
+        mCallbacks.onItemSelected(ApplicationVariables.getInstance().ITEMS.get(position).color_name,
+                ApplicationVariables.getInstance().ITEMS.get
+                (position).color);
     }
 
     @Override
@@ -144,7 +146,7 @@ public class ColourListFragment extends ListFragment {
 
         adapter.notifyDataSetChanged();
         setListAdapter(adapter);
-        if (DummyContent.ITEMS.isEmpty())
+        if (ApplicationVariables.getInstance().ITEMS.isEmpty())
             Toast.makeText(getActivity(),"BUG!!!\n No colours to add :(",Toast.LENGTH_LONG).show();
     }
 

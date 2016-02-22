@@ -11,9 +11,18 @@ import java.util.Map;
  * Helper class for providing sample content for user interfaces created by
  * Android template wizards.
  * <p/>
- * TODO: Replace all uses of this class before publishing your app.
+ *
  */
 public class DummyContent {
+
+    private static DummyContent dummyContentInstance;
+
+    public static DummyContent getInstance()
+    {
+        if (dummyContentInstance==null)
+            dummyContentInstance=new DummyContent();
+        return dummyContentInstance;
+    }
 
     /**
      * An array of sample (dummy) items.
@@ -25,12 +34,7 @@ public class DummyContent {
      */
     public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
-    static {
-        // Add 3 sample items.
-        /*addItem(new DummyItem("1", "Item 1"));
-        addItem(new DummyItem("2", "Item 2"));
-        addItem(new DummyItem("3", "Item 3"));*/
-    }
+
 
     public static void addItem(DummyItem item) {
         ITEMS.add(item);

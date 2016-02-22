@@ -39,37 +39,13 @@ public class ColourListActivity extends AppCompatActivity
     public static final String INTENT_EXTRA="extra";
     private boolean mTwoPane;
     private ShareActionProvider actionProvider;
-    /*private int color[]={
-            R.color.red,
-            R.color.pink,
-            R.color.purple,
-            R.color.deep_purple,
-            R.color.indigo,
-            R.color.light_blue,
-            R.color.blue,
-            R.color.cyan,
-            R.color.teal,
-            R.color.green,
-            R.color.light_green,
-            R.color.lime,
-            R.color.yellow,
-            R.color.amber,
-            R.color.orange,
-            R.color.deep_orange,
-            R.color.brown,
-            R.color.grey,
-            R.color.blue_grey,
-            R.color.black
-    };*/
+
 
     private Toolbar toolbar;
-    private String[] colour_name;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*colour_name=getResources().getStringArray(R.array.color_names);
-        new colorLoader().execute();*/
 
         setContentView(R.layout.activity_colour_list);
         toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -86,7 +62,7 @@ public class ColourListActivity extends AppCompatActivity
 
 
 
-        /*Log.e("arraySize", " " + colour_name.length);*/
+
         if (findViewById(R.id.colour_detail_container) != null) {
             // The detail container view will be present only in the
             // large-screen layouts (res/values-large and
@@ -102,7 +78,6 @@ public class ColourListActivity extends AppCompatActivity
 
         }
 
-        // TODO: If exposing deep links into your app, handle intents here.
 
         context=this.getApplicationContext();
     }
@@ -178,7 +153,6 @@ public class ColourListActivity extends AppCompatActivity
                 "http://play.google.com/store/apps/details?id=" + context.getPackageName());
 
         shareIntent.setType("text/plain");
-        //startActivity(shareIntent);
         return shareIntent;
     }
 
@@ -190,17 +164,4 @@ public class ColourListActivity extends AppCompatActivity
         return false;
     }
 
-    /*class  colorLoader extends AsyncTask<Void,Void,Void>{
-        @Override
-        protected Void doInBackground(Void... params) {
-
-            DummyContent.clearAll();
-            for (int i=0; i<colour_name.length; i++)
-            {
-
-                DummyContent.addItem(new DummyContent.DummyItem(color[i],colour_name[i]));
-            }
-            return null;
-        }
-    }*/
 }

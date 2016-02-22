@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.nezspencer.nuhiara.colourhub.adapter.SpinnerAdapter;
-import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
+import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 
 /**
  * A fragment representing a single Colour detail screen.
@@ -50,7 +49,7 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
     /**
      * The dummy content this fragment is presenting.
      */
-    private DummyContent.DummyItem mItem;
+    private ApplicationVariables.DummyItem mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -67,7 +66,7 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
             // Load the dummy content specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
-            mItem = DummyContent.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = ApplicationVariables.getInstance().ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
             colorName=getArguments().getString(ARG_ITEM_ID);
         }
 
@@ -201,7 +200,8 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
 
         displayColorCode();
 
-        spinner.setAdapter(new SpinnerAdapter(getActivity(), DummyContent.ITEMS));
+        spinner.setAdapter(new SpinnerAdapter(getActivity(), ApplicationVariables.getInstance()
+                .ITEMS));
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

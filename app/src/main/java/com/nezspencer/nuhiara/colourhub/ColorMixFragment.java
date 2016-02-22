@@ -1,14 +1,9 @@
 package com.nezspencer.nuhiara.colourhub;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
@@ -19,18 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 import com.nezspencer.nuhiara.colourhub.adapter.SpinnerAdapter;
-import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
+import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +31,9 @@ import java.util.List;
  */
 public class ColorMixFragment extends Fragment implements View.OnClickListener,SeekBar.OnSeekBarChangeListener {
 
+    private ApplicationVariables applicationVariables;
     private static final int IMAGE_PIX =6 ;
+    public static final String CHOSEN_COLOUR ="col";
     private SeekBar A_seekbar;
     private SeekBar R_seekBar;
     private SeekBar G_seekbar;
@@ -62,10 +55,18 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
     static int R_colour=0;
     static int G_colour=0;
     static int B_colour=0;
+
+    public ColorMixFragment() {
+        super();
+
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        applicationVariables=ApplicationVariables.getInstance();
         colorCodes=Arrays.asList(getResources().getStringArray(R.array.color_codes));
         size = colorCodes.size() - 1;
 
@@ -77,7 +78,9 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         View view=inflater.inflate(R.layout.fragment_colour_mix,container,false);
         findAllViews(view);
         displayColorCode();
-
+        if (getArguments()!=null)
+        backLayout.setCardBackgroundColor(applicationVariables.ITEMS.get(getArguments().getInt(CHOSEN_COLOUR,
+                0)).color);
         screenLayout.setBackgroundColor(stringToColor(computeColor()));
         renderButton.setOnClickListener(this);
         A_seekbar.setMax(size);
@@ -107,10 +110,25 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         G_seekbar.setOnSeekBarChangeListener(this);
         B_seekbar.setOnSeekBarChangeListener(this);
 
-        backgroundColorSpinner.setAdapter(new SpinnerAdapter(getActivity(), DummyContent.ITEMS));
+        backgroundColorSpinner.setAdapter(new SpinnerAdapter(getActivity(), applicationVariables.ITEMS));
+
+
+
+
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
         backgroundColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+
 
             }
 
@@ -119,13 +137,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
 
             }
         });
-
-
-
-        return view;
     }
-
-
 
     private void findAllViews(View view)
     {

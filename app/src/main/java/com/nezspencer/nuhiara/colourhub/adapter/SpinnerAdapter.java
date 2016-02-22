@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.nezspencer.nuhiara.colourhub.R;
-import com.nezspencer.nuhiara.colourhub.dummy.DummyContent;
+import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 
 import java.util.List;
 
@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * Created by Nnabueze on 1/22/2016.
  */
-public class SpinnerAdapter extends ArrayAdapter<DummyContent.DummyItem> {
+public class SpinnerAdapter extends ArrayAdapter<ApplicationVariables.DummyItem> {
 
-    List<DummyContent.DummyItem> items;
+    List<ApplicationVariables.DummyItem> items;
     Context context;
 
 
-    public SpinnerAdapter(Context context,List<DummyContent.DummyItem> items) {
+    public SpinnerAdapter(Context context,List<ApplicationVariables.DummyItem> items) {
         super(context, R.layout.spinner_item,items);
         this.items=items;
         this.context=context;
