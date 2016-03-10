@@ -18,7 +18,7 @@
             android:layout_marginTop="10dp"
             xmlns:cardView="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="280dp"
             cardView:cardCornerRadius="0dp"
             cardView:cardElevation="2dp"
             android:id="@+id/back_layout"
@@ -53,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:textStyle="bold"
                     android:text="Adjust colour intensity"/>
                 <SeekBar
                     android:layout_marginTop="2dp"
@@ -61,6 +62,7 @@
                     android:id="@+id/colorIntensity" />
                 <TextView
                     android:layout_marginTop="7dp"
+                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
@@ -80,7 +82,7 @@
             android:layout_marginTop="2dp"
             xmlns:cardView="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             cardView:cardCornerRadius="0dp"
             android:layout_marginBottom="30dp"
             android:id="@+id/color_code_layout"
@@ -90,6 +92,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:paddingBottom="80dp"
                android:padding="20dp">
 
@@ -107,29 +110,32 @@
                     android:layout_height="wrap_content"
                     android:padding="3dp"
                     android:textIsSelectable="true"
-                    android:layout_alignStart="@+id/argb_color"
-                    android:layout_alignLeft="@+id/argb_color"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toRightOf="@+id/rgb_label"
+                    android:layout_toEndOf="@+id/rgb_label"
                     android:layout_width="wrap_content"
                     android:text="#dd88cc99"
                     android:background="@drawable/text_background"
                     android:textStyle="bold"
-                    android:textSize="22sp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/rgb_label"
-                    android:layout_toEndOf="@+id/rgb_label" />
+                    android:textSize="22sp"/>
 
                 <TextView
+                    android:layout_marginStart="60dp"
+                    android:layout_marginLeft="60dp"
                     android:id="@+id/argb_label"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/rgb_color"
+                    android:layout_toRightOf="@+id/rgb_color"
                     android:textSize="24sp"
                     android:text="ARGB:"/>
 
                 <TextView
                     android:id="@+id/argb_color"
+                    android:layout_alignBaseline="@+id/argb_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/text_background"
@@ -141,12 +147,11 @@
                     android:layout_marginRight="20dp"
                     android:padding="3dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_alignParentBottom="true"
                     android:layout_toRightOf="@+id/argb_label"
                     android:layout_toEndOf="@+id/argb_label"
                     android:layout_marginStart="20dp"/>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Choose Background Color"
@@ -164,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/argb_color"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true" />-->
 
 
 

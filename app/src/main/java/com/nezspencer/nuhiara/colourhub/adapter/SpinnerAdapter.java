@@ -14,6 +14,8 @@ import java.util.List;
 
 
 /**
+ * Adapter for background color selector spinner
+ * yet to be used
  * Created by Nnabueze on 1/22/2016.
  */
 public class SpinnerAdapter extends ArrayAdapter<ApplicationVariables.DummyItem> {
@@ -54,6 +56,19 @@ public class SpinnerAdapter extends ArrayAdapter<ApplicationVariables.DummyItem>
         cardView.setCardBackgroundColor(getItem(position).color);*/
         view.setBackgroundResource(items.get(position).color);
         Log.e("color set: "," "+items.get(position).color_name);
+
+        return view;
+    }
+
+    public View getBlankView(int position, View blank,ViewGroup parent)
+    {
+        View view;
+        if (blank==null)
+        {
+            view= LayoutInflater.from(context).inflate(R.layout.spinner_item,parent,false);
+        }
+        else
+            view=blank;
 
         return view;
     }

@@ -3,7 +3,6 @@ package com.nezspencer.nuhiara.colourhub.helper;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.nezspencer.nuhiara.colourhub.R;
 
@@ -49,7 +48,6 @@ public class ApplicationVariables extends Application {
         colour_name=getResources().getStringArray(R.array.color_names);
 
         new colorLoader().execute();
-        Toast.makeText(getApplicationContext(),"colour loaded",Toast.LENGTH_LONG).show();
     }
 
 
@@ -60,12 +58,12 @@ public class ApplicationVariables extends Application {
     /**
      * An array of sample (dummy) items.
      */
-    public List<DummyItem> ITEMS = new ArrayList<DummyItem>();
+    public List<DummyItem> ITEMS = new ArrayList<>();
 
     /**
      * A map of sample (dummy) items, by ID.
      */
-    public Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
+    public Map<String, DummyItem> ITEM_MAP = new HashMap<>();
 
 
 

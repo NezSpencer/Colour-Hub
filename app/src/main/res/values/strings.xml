@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Colour Hub</string>
     <string name="chooser">Choose background color</string>
+    <string name="colours">Select Background</string>
     <string name="title_colour_detail">Colour Detail</string>
     <string-array name="color_names">
         <item>Red</item>

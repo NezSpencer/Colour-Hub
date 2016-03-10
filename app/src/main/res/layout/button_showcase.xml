@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:gravity="center_horizontal"
+              android:layout_width="match_parent"
+                android:id="@+id/showcase"
+                android:background="@android:color/transparent"
+              android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/pref_showAgain"
+        android:checked="false"
+        android:text="Do not show again"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_alignBaseline="@+id/showcase_close"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/showcase_close"
+        android:text="Got It"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@+id/pref_showAgain"
+        android:layout_toEndOf="@+id/pref_showAgain"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/holo_green_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

@@ -1,19 +1,20 @@
 package com.nezspencer.nuhiara.colourhub;
 
-import android.animation.AnimatorSet;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
+import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
+import com.nineoldandroids.animation.Animator;
 
 /**
  *
@@ -21,104 +22,172 @@ import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
  */
 public class BaseActivity extends AppCompatActivity {
 
+    TextView c_view;
+    TextView o1_view;
+    TextView l_view;
+    TextView o_view;
+    TextView u1_view;
+    TextView r_view;
+    TextView h_view;
+    TextView u_view;
+    TextView b_view;
+
+    private int color[]={
+            R.color.red,
+            R.color.pink,
+            R.color.purple,
+            R.color.deep_purple,
+            R.color.light_blue,
+            R.color.blue,
+            R.color.teal,
+            R.color.green,
+            R.color.light_green,
+            R.color.lime,
+            R.color.yellow,
+            R.color.amber,
+            R.color.orange,
+            R.color.deep_orange,
+
+    };
     RelativeLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.temp);
-        int top;
-        int left;
-        int bottom;
-        int right;
+
+        findAndColourAllViews();
 
 
-        layout=(RelativeLayout)findViewById(R.id.temp);
-        RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams(RelativeLayout
-                .LayoutParams
-                .WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,RelativeLayout.TRUE);
-        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT,
-                RelativeLayout.TRUE);
-        bottom=layout.getBottom();
-        right=layout.getRight();
-        top=layout.getTop();
-        left=layout.getLeft();
+        if (SystemClock.elapsedRealtime()==2000)
+            c_view.setVisibility(View.VISIBLE);
 
-        TextView c_view=(TextView)findViewById(R.id.c);
-        TextView o1_view=(TextView)findViewById(R.id.o1);
-        TextView l_view=(TextView)findViewById(R.id.l);
-        TextView o_view=(TextView)findViewById(R.id.o);
-        TextView u1_view=(TextView)findViewById(R.id.u1);
-        TextView r_view=(TextView)findViewById(R.id.r);
-        TextView space_view=(TextView)findViewById(R.id.space);
-        TextView h_view=(TextView)findViewById(R.id.h);
-        TextView u_view=(TextView)findViewById(R.id.u);
-        TextView b_view=(TextView)findViewById(R.id.b);
+        if (SystemClock.elapsedRealtime()==4000)
+            o1_view.setVisibility(View.VISIBLE);
 
+        if (SystemClock.elapsedRealtime()==6000)
+            l_view.setVisibility(View.VISIBLE);
 
+        if (SystemClock.elapsedRealtime()==8000)
+            o_view.setVisibility(View.VISIBLE);
 
-        TranslateAnimation animation=new TranslateAnimation(right,left,bottom,top);
-        animation.setDuration(4000);
-        animation.setRepeatCount(1);
-        animation.setInterpolator(new AccelerateInterpolator());
-        animation.setStartOffset(2000);
+        if (SystemClock.elapsedRealtime()==10000)
+            u1_view.setVisibility(View.VISIBLE);
 
-        TextView c=new TextView(this);
-        c.setText("C");
-        c.setTextSize(25);
-        c.setTextColor(Color.GREEN);
-        c.setLayoutParams(params);
-        layout.addView(c);
+        if (SystemClock.elapsedRealtime()==12000)
+            r_view.setVisibility(View.VISIBLE);
+
+        if (SystemClock.elapsedRealtime()==13000)
+            h_view.setVisibility(View.VISIBLE);
+
+        if (SystemClock.elapsedRealtime()==14000)
+            u_view.setVisibility(View.VISIBLE);
+
+        if (SystemClock.elapsedRealtime()==14500)
+            b_view.setVisibility(View.VISIBLE);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(2000)
+             //   .withListener(setListener(c_view))
+                .playOn(c_view);
 
 
-        TranslateAnimation o_anim=initializeAnimation(right, c_view.getRight(),
-                bottom, top);
-        TextView o_txt=initializeTextView("O", params);
-        TranslateAnimation l_anim=initializeAnimation(right, o1_view.getRight(), bottom, o1_view
-                .getTop());
-        TextView l_txt=initializeTextView("L", params);
-        TranslateAnimation o2_anim=initializeAnimation(right, l_view.getRight(), bottom, top);
-        TextView o2_txt=initializeTextView("O", params);
 
-        TranslateAnimation u_anim=initializeAnimation(right, o_view.getRight(), bottom, top);
-        TextView u_txt=initializeTextView("U", params);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(4000)
+         //       .withListener(setListener(o1_view))
+                .playOn(o1_view);
 
-        TranslateAnimation r_anim=initializeAnimation(right, u1_view.getRight(), bottom, top);
-        TextView r_txt=initializeTextView("R", params);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(6000)
+           //     .withListener(setListener(l_view))
+                .playOn(l_view);
 
-        TranslateAnimation sp_anim=initializeAnimation(right, r_view.getRight(), bottom, top);
-        TextView sp_txt=initializeTextView("  ", params);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(8000)
+             //   .withListener(setListener(o_view))
+                .playOn(o_view);
 
-        TranslateAnimation h_anim=initializeAnimation(right, space_view.getRight(), bottom, top);
-        TextView h_txt=initializeTextView("H", params);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(10000)
+               // .withListener(setListener(u1_view))
+                .playOn(u1_view);
 
-        TranslateAnimation u2_anim=initializeAnimation(right, h_view.getRight(), bottom, top);
-        TextView u2_txt=initializeTextView("U", params);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(12000)
+                //.withListener(setListener(r_view))
+                .playOn(r_view);
 
-        TranslateAnimation b_anim=initializeAnimation(right, u_view.getRight(), bottom, top);
-        TextView b_txt=initializeTextView("B", params);
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(13000)
+                //.withListener(setListener(h_view))
+                .playOn(h_view);
+
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(14000)
+               // .withListener(setListener(u_view))
+                .playOn(u_view);
+
+        YoYo.with(Techniques.RotateInUpLeft)
+                .duration(3000)
+                .delay(14500)
+               // .withListener(setListener(b_view))
+                .playOn(b_view);
 
 
-        animation.setAnimationListener(setAnimListener(o_anim, o_txt));
-        o_anim.setAnimationListener(setAnimListener(l_anim, l_txt));
-        l_anim.setAnimationListener(setAnimListener(o2_anim, o2_txt));
-        o2_anim.setAnimationListener(setAnimListener(u_anim, u_txt));
-        u_anim.setAnimationListener(setAnimListener(r_anim, r_txt));
-        r_anim.setAnimationListener(setAnimListener(sp_anim, sp_txt));
-        sp_anim.setAnimationListener(setAnimListener(h_anim, h_txt));
-        h_anim.setAnimationListener(setAnimListener(u2_anim, u2_txt));
-        u_anim.setAnimationListener(setAnimListener(b_anim, b_txt));
+    }
 
-        c.startAnimation(animation);
-        /*o_txt.startAnimation(o_anim);
-        l_txt.startAnimation(l_anim);
-        o2_txt.startAnimation(o2_anim);
-        u_txt.startAnimation(u_anim);
-        r_txt.startAnimation(r_anim);
-        sp_txt.startAnimation(sp_anim);
-        h_txt.startAnimation(h_anim);
-        u2_txt.startAnimation(u2_anim);
-        b_txt.startAnimation(b_anim);*/
+    public Animator.AnimatorListener setListener(final TextView view)
+    {
+        return new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if (animation.isRunning())
+                    view.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        };
+    }
+    public void findAndColourAllViews()
+    {
+        c_view=(TextView)findViewById(R.id.c);
+        c_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        o1_view=(TextView)findViewById(R.id.o1);
+        o1_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        l_view=(TextView)findViewById(R.id.l);
+        l_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        o_view=(TextView)findViewById(R.id.o);
+        o_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        u1_view=(TextView)findViewById(R.id.u1);
+        u1_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        r_view=(TextView)findViewById(R.id.r);
+        r_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        h_view=(TextView)findViewById(R.id.h);
+        h_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        u_view=(TextView)findViewById(R.id.u);
+        u_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
+        b_view=(TextView)findViewById(R.id.b);
+        b_view.setTextColor(getResources().getColor(color[(int) (Math.random() * color.length)]));
     }
     public TextView initializeTextView(String text,RelativeLayout.LayoutParams params)
     {
@@ -153,26 +222,5 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public Animation.AnimationListener setAnimListener(final TranslateAnimation anim, final TextView textView)
-    {
-        return new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                layout.addView(textView);
-                textView.startAnimation(anim);
-                Toast.makeText(BaseActivity.this,"Started: "+textView.getText(),Toast.LENGTH_LONG).show();
-            }
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                Toast.makeText(BaseActivity.this,"Started: "+textView.getText(),Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        };
-    }
 }

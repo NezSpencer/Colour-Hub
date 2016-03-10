@@ -88,20 +88,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     cardView:cardCornerRadius="0dp"
-                    cardView:cardElevation="2dp"
                     android:id="@+id/back_layout"
-                    >
+                    cardView:cardElevation="2dp"
+                        >
+
                         <LinearLayout
-                            android:id="@+id/fore_layout"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            />
-                    <ImageView
-                        android:id="@+id/image_screen"
-                        android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                                android:id="@+id/fore_layout"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                />
+
 
                 </android.support.v7.widget.CardView>
 
@@ -275,16 +272,19 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:padding="10dp"
+                            android:gravity="center"
                             android:layout_marginTop="20dp">
 
                             <TextView
                                 android:id="@+id/rgb_label"
+                                android:layout_alignStart="@+id/argb_label"
+                                android:layout_alignLeft="@+id/argb_label"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
-                                android:layout_marginBottom="10dp"
-                                android:textSize="24sp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginRight="15dp"
+                                android:layout_marginBottom="30dp"
+                                android:textSize="27sp"
                                 android:text="RGB:"/>
                             <TextView
                                 android:id="@+id/rgb_color"
@@ -295,7 +295,7 @@
                                 android:text="#dd88cc99"
                                 android:background="@drawable/text_background"
                                 android:textStyle="bold"
-                                android:textSize="20sp"
+                                android:textSize="25sp"
                                 android:layout_alignParentTop="true"
                                 android:layout_alignEnd="@+id/argb_color"
                                 android:layout_alignRight="@+id/argb_color"
@@ -307,12 +307,12 @@
                             <TextView
                                 android:id="@+id/argb_label"
                                 android:layout_below="@+id/rgb_label"
-                                android:layout_marginEnd="8dp"
-                                android:layout_marginRight="8dp"
+                                android:layout_marginEnd="15dp"
+                                android:layout_marginRight="15dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignBaseline="@+id/argb_color"
-                                android:textSize="24sp"
+                                android:textSize="27sp"
                                 android:text="ARGB:"/>
 
                             <TextView
@@ -322,7 +322,7 @@
                                 android:background="@drawable/text_background"
                                 android:textStyle="bold"
                                 android:textIsSelectable="true"
-                                android:textSize="20sp"
+                                android:textSize="25sp"
                                 android:text="#dd88cc99"
                                 android:padding="3dp"
                                 android:layout_gravity="center_horizontal"
@@ -330,7 +330,7 @@
                                 android:layout_toRightOf="@+id/argb_label"
                                 android:layout_toEndOf="@+id/argb_label" />
 
-                            <TextView
+                            <!--<TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Choose Background Color"
@@ -350,7 +350,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignBottom="@+id/textView"
                                 android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true" />
+                                android:layout_alignParentEnd="true" />-->
 
 
                         </RelativeLayout>

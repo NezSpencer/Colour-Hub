@@ -8,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -20,7 +22,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
-import com.nezspencer.nuhiara.colourhub.adapter.SpinnerAdapter;
 import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 
 import java.util.Arrays;
@@ -55,6 +56,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
     static int R_colour=0;
     static int G_colour=0;
     static int B_colour=0;
+    private ActionMode.Callback callback;
 
     public ColorMixFragment() {
         super();
@@ -78,9 +80,12 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         View view=inflater.inflate(R.layout.fragment_colour_mix,container,false);
         findAllViews(view);
         displayColorCode();
-        if (getArguments()!=null)
+
+        rgbColor.setCustomSelectionActionModeCallback(setUpActionMode());
+        argbColor.setCustomSelectionActionModeCallback(setUpActionMode());
+        /*if (getArguments()!=null)
         backLayout.setCardBackgroundColor(applicationVariables.ITEMS.get(getArguments().getInt(CHOSEN_COLOUR,
-                0)).color);
+                0)).color);*/
         screenLayout.setBackgroundColor(stringToColor(computeColor()));
         renderButton.setOnClickListener(this);
         A_seekbar.setMax(size);
@@ -110,7 +115,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         G_seekbar.setOnSeekBarChangeListener(this);
         B_seekbar.setOnSeekBarChangeListener(this);
 
-        backgroundColorSpinner.setAdapter(new SpinnerAdapter(getActivity(), applicationVariables.ITEMS));
+
 
 
 
@@ -123,20 +128,7 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         super.onViewCreated(view, savedInstanceState);
 
 
-        backgroundColorSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
 
     private void findAllViews(View view)
@@ -149,7 +141,6 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         renderButton=(CircularProgressButton)view.findViewById(R.id.btnWithText);
         rgbColor=(TextView)view.findViewById(R.id.rgb_color);
         argbColor=(TextView)view.findViewById(R.id.argb_color);
-        backgroundColorSpinner=(Spinner)view.findViewById(R.id.spinner);
         screenLayout=(LinearLayout)view.findViewById(R.id.fore_layout);
         backLayout=(CardView)view.findViewById(R.id.back_layout);
 
@@ -275,10 +266,11 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
 
         if (length==6)
         {
-            A_string=colorCodes.get(0);
+            A_string="FF";
             R_string=temp.substring(0,2);
             G_string=temp.substring(2,4);
             B_string=temp.substring(4,6);
+            A_seekbar.setProgress(0);
         }
 
 
@@ -287,9 +279,10 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
             R_string=temp.substring(2,4);
             G_string=temp.substring(4,6);
             B_string=temp.substring(6,8);
+            A_seekbar.setProgress(colorCodes.indexOf(A_string.toUpperCase()));
         }
 
-        A_seekbar.setProgress(colorCodes.indexOf(A_string.toUpperCase()));
+
         R_seekBar.setProgress(colorCodes.indexOf(R_string.toUpperCase()));
         G_seekbar.setProgress(colorCodes.indexOf(G_string.toUpperCase()));
         B_seekbar.setProgress(colorCodes.indexOf(B_string.toUpperCase()));
@@ -332,5 +325,32 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         }
     }
 
+    public ActionMode.Callback setUpActionMode()
+    {
+        callback=new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.setTitle("Copy colour code");
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        };
+
+        return callback;
+    }
 
 }

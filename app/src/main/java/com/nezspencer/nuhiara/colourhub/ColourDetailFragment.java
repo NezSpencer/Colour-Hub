@@ -4,16 +4,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.nezspencer.nuhiara.colourhub.adapter.SpinnerAdapter;
 import com.nezspencer.nuhiara.colourhub.helper.ApplicationVariables;
 
 /**
@@ -29,7 +30,7 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
      */
     public static final String ARG_ITEM_ID = "item_id";
     public static final String ARG_ITEM_COLOR="color";
-
+    private ActionMode.Callback callback;
     private String colorName="none";
     private String[] colorShades;
     private String[] alpha_level;
@@ -189,7 +190,6 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
         fore_layout=(FrameLayout)rootView.findViewById(R.id.fore_layout);
         argb_color=(TextView)rootView.findViewById(R.id.argb_color);
         rgb_color=(TextView)rootView.findViewById(R.id.rgb_color);
-        spinner=(Spinner)rootView.findViewById(R.id.spinner);
         ColorSeekBar.setMax(colorShades.length - 1);
         if (isBlack)
         {
@@ -200,26 +200,15 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
 
         displayColorCode();
 
-        spinner.setAdapter(new SpinnerAdapter(getActivity(), ApplicationVariables.getInstance()
-                .ITEMS));
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         alphaSeekBar.setMax(alpha_level.length - 1);
 
         ColorSeekBar.setProgress(colorShades.length/2);
 
         ColorSeekBar.setOnSeekBarChangeListener(this);
         alphaSeekBar.setOnSeekBarChangeListener(this);
-
+        rgb_color.setCustomSelectionActionModeCallback(setUpActionMode());
+        argb_color.setCustomSelectionActionModeCallback(setUpActionMode());
         // Show the dummy content as text in a TextView.
         if (mItem != null) {
             //((TextView) rootView.findViewById(R.id.colour_detail)).setText(mItem.color_name);
@@ -266,5 +255,33 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
+    }
+
+    public ActionMode.Callback setUpActionMode()
+    {
+        callback=new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.setTitle("Copy colour code");
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+
+            }
+        };
+
+        return callback;
     }
 }

@@ -2,14 +2,99 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/images"
-    android:layout_height="match_parent">
+    android:background="@drawable/tt"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
 
-    <com.nezspencer.nuhiara.colourhub.helper.Typewriter
-        android:id="@+id/titleText"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="60sp"
-        android:gravity="center" />
+        android:background="#80212121"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:id="@+id/c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C"
+            android:textSize="@dimen/app_character_size"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:id="@+id/o1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O"
+            android:layout_toEndOf="@+id/c"
+            android:layout_toRightOf="@+id/c"
+            android:textSize="@dimen/app_character_size"/>
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:id="@+id/l"
+            android:layout_toEndOf="@+id/o1"
+            android:layout_toRightOf="@+id/o1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="L"
+            android:textSize="@dimen/app_character_size"/>
+        <TextView
+            android:id="@+id/o"
+            android:layout_toEndOf="@+id/l"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O"
+            android:textSize="@dimen/app_character_size"/>
+        <TextView
+            android:id="@+id/u1"
+            android:layout_toEndOf="@+id/o"
+            android:layout_toRightOf="@+id/o"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="U"
+            android:textSize="@dimen/app_character_size"/>
+        <TextView
+            android:id="@+id/r"
+            android:layout_toEndOf="@+id/u1"
+            android:layout_toRightOf="@+id/u1"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R  "
+            android:textSize="@dimen/app_character_size"/>
+
+        <TextView
+            android:id="@+id/h"
+            android:layout_toEndOf="@+id/r"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="H"
+            android:textSize="@dimen/app_character_size"/>
+        <TextView
+            android:id="@+id/u"
+            android:layout_toEndOf="@+id/h"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="U"
+            android:textSize="@dimen/app_character_size"/>
+        <TextView
+            android:id="@+id/b"
+            android:layout_toEndOf="@+id/u"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/u"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B"
+            android:textSize="@dimen/app_character_size"/>
+
+
+    </RelativeLayout>
 
 </RelativeLayout>

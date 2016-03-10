@@ -4,99 +4,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    android:id="@+id/temp">
+    android:id="@+id/temp"
+    android:gravity="center_horizontal">
+
+
 
     <TextView
         android:id="@+id/c"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="C"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
     <TextView
         android:id="@+id/o1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="O"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/c"
         android:layout_toEndOf="@+id/c"
-        android:textSize="25sp"/>
+        android:layout_toRightOf="@+id/c"
+        android:textSize="50sp"/>
 
     <TextView
         android:id="@+id/l"
         android:layout_toEndOf="@+id/o1"
         android:layout_toRightOf="@+id/o1"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="L"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
     <TextView
         android:id="@+id/o"
-        android:layout_toRightOf="@+id/l"
         android:layout_toEndOf="@+id/l"
-        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/l"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="O"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
     <TextView
         android:id="@+id/u1"
         android:layout_toEndOf="@+id/o"
         android:layout_toRightOf="@+id/o"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="U"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
     <TextView
         android:id="@+id/r"
-        android:layout_toRightOf="@+id/u1"
         android:layout_toEndOf="@+id/u1"
-        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/u1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="R"
-        android:textSize="25sp"/>
-    <TextView
-        android:id="@+id/space"
-        android:layout_toEndOf="@+id/r"
-        android:layout_toRightOf="@+id/r"
-        android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="  "
-        android:textSize="25sp"/>
+        android:text="R  "
+        android:textSize="50sp"/>
+
     <TextView
         android:id="@+id/h"
-        android:layout_toRightOf="@+id/space"
-        android:layout_toEndOf="@+id/space"
-        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/r"
+        android:layout_toRightOf="@+id/r"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="H"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
     <TextView
         android:id="@+id/u"
         android:layout_toEndOf="@+id/h"
         android:layout_toRightOf="@+id/h"
-        android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="U"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
     <TextView
         android:id="@+id/b"
-        android:layout_toRightOf="@+id/u"
         android:layout_toEndOf="@+id/u"
-        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/u"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="B"
-        android:textSize="25sp"/>
+        android:textSize="50sp"/>
+
 
 
 </RelativeLayout>
