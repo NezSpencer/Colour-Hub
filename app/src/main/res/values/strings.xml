@@ -613,7 +613,7 @@
     </string-array>
         <string name="white_col">FFFFFF</string>
         <string name="black_col">000000</string>
-
+    <string name="copyright">NezSpencer&#169;2016</string>
 
 
 </resources>

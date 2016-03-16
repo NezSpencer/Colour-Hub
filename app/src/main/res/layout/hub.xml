@@ -95,6 +95,16 @@
             android:textSize="@dimen/app_character_size"/>
 
 
+
+
     </RelativeLayout>
+    <TextView
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:text="@string/copyright"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"/>
 
 </RelativeLayout>

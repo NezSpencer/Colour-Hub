@@ -3,15 +3,26 @@
               android:gravity="center_horizontal"
               android:layout_width="match_parent"
                 android:id="@+id/showcase"
+                android:layout_margin="20dp"
                 android:background="@android:color/transparent"
               android:layout_height="wrap_content">
 
+    <TextView
+         android:id="@+id/infoText"
+         android:layout_width="match_parent"
+         android:gravity="center_horizontal"
+         android:text="touch any part of the returned image to get its corresponding colour code"
+         android:textSize="18sp"
+         android:textColor="@color/white"
+         android:layout_height="150dp"
+            />
     <CheckBox
+        android:layout_below="@+id/infoText"
         android:id="@+id/pref_showAgain"
         android:checked="false"
         android:text="Do not show again"
-        android:textSize="20sp"
-        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textColor="@android:color/holo_green_light"
         android:layout_alignBaseline="@+id/showcase_close"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp"
@@ -20,13 +31,15 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:layout_marginTop="20dp"
         android:id="@+id/showcase_close"
         android:text="Got It"
+        android:layout_below="@+id/infoText"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:textColor="@color/white"
-        android:layout_toRightOf="@+id/pref_showAgain"
-        android:layout_toEndOf="@+id/pref_showAgain"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/holo_green_light"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="50dp"/>
 </RelativeLayout>

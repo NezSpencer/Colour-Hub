@@ -61,7 +61,7 @@
                         android:id="@+id/input_colour"
                         android:gravity="center_horizontal"
                         android:background="#D9E0E0E0"
-                        android:hint="enter color code"/>
+                        android:hint="color e.g #123456"/>
 
                     <com.dd.CircularProgressButton
                         xmlns:app="http://schemas.android.com/apk/res-auto"

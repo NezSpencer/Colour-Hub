@@ -36,7 +36,7 @@
             android:layout_marginTop="3dp"
             xmlns:cardView="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="wrap_content"
             cardView:cardCornerRadius="0dp"
             android:id="@+id/adjust_layout"
             cardView:cardElevation="2dp"
@@ -45,8 +45,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:padding="13dp"
-                android:paddingBottom="8dp"
+                android:padding="15dp"
+                android:gravity="center_vertical"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -55,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:textStyle="bold"
                     android:text="Adjust colour intensity"/>
                 <SeekBar
                     android:layout_marginTop="2dp"
@@ -66,6 +67,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="15sp"
+                    android:textStyle="bold"
                     android:text="Adjust transparency level"/>
                 <SeekBar
                     android:layout_marginTop="3dp"
@@ -82,7 +84,7 @@
             android:layout_marginTop="2dp"
             xmlns:cardView="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             cardView:cardCornerRadius="0dp"
             android:id="@+id/color_code_layout"
             cardView:cardElevation="2dp"
@@ -91,7 +93,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-               android:padding="10dp">
+               android:padding="20dp">
 
                 <TextView
                     android:id="@+id/rgb_label"

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="app_character_size">70sp</dimen>
     <dimen name="dialog_width">500dp</dimen>
+    <dimen name="fab_size">120dp</dimen>
 </resources>

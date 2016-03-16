@@ -290,6 +290,7 @@
                                 android:id="@+id/rgb_color"
                                 android:layout_height="wrap_content"
                                 android:padding="3dp"
+                                android:gravity="center_horizontal"
                                 android:textIsSelectable="true"
                                 android:layout_width="wrap_content"
                                 android:text="#dd88cc99"
