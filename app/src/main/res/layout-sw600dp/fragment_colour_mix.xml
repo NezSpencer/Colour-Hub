@@ -52,6 +52,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="25sp"
+                            android:textColorHint="#CFD8DC"
                             android:gravity="center_horizontal"
                             android:background="#D9E0E0E0"
                             android:hint="e.g #00bceeff "/>
@@ -143,7 +144,11 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:orientation="vertical"
-                        android:padding="13dp"
+                        android:paddingTop="8dp"
+                        android:paddingRight="13dp"
+                        android:paddingEnd="13dp"
+                        android:paddingLeft="13dp"
+                        android:paddingStart="13dp"
                         android:paddingBottom="8dp"
                         android:layout_height="match_parent">
 
@@ -151,11 +156,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="10"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="6dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_marginTop="7dp"
+                                android:id="@+id/a_label"
+                                android:layout_marginTop="2dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
@@ -175,11 +181,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="10"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="6dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_marginTop="7dp"
+                                android:id="@+id/r_label"
+                                android:layout_marginTop="2dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
@@ -199,16 +206,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="10"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="6dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_marginTop="7dp"
+                                android:id="@+id/g_label"
+                                android:layout_marginTop="2dp"
                                 android:layout_width="0dp"
                                 android:gravity="center"
                                 android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 android:text="G"/>
                             <SeekBar
                                 android:layout_weight="9"
@@ -223,16 +231,17 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:weightSum="10"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="6dp"
                             android:orientation="horizontal">
 
                             <TextView
-                                android:layout_marginTop="7dp"
+                                android:id="@+id/b_label"
+                                android:layout_marginTop="2dp"
                                 android:layout_width="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:layout_height="wrap_content"
-                                android:textSize="20sp"
+                                android:textSize="18sp"
                                 android:text="B"/>
                             <SeekBar
                                 android:layout_marginTop="2dp"
@@ -242,9 +251,6 @@
                                 android:id="@+id/colorB" />
 
                         </LinearLayout>
-
-
-
 
                     </LinearLayout>
 
@@ -293,7 +299,6 @@
                                 android:gravity="center_horizontal"
                                 android:textIsSelectable="true"
                                 android:layout_width="wrap_content"
-                                android:text="#dd88cc99"
                                 android:background="@drawable/text_background"
                                 android:textStyle="bold"
                                 android:textSize="25sp"
@@ -324,7 +329,6 @@
                                 android:textStyle="bold"
                                 android:textIsSelectable="true"
                                 android:textSize="25sp"
-                                android:text="#dd88cc99"
                                 android:padding="3dp"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_below="@+id/rgb_label"

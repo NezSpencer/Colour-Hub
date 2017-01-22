@@ -23,7 +23,6 @@
                 android:id="@+id/back_layout"
                 cardView:cardCornerRadius="0dp"
                 cardView:cardElevation="2dp"
-                cardView:cardBackgroundColor="#fdc8de00"
                 >
 
 
@@ -110,6 +109,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/a_label"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_weight="3"
@@ -133,6 +133,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/r_label"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_weight="3"
@@ -156,6 +157,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                                android:id="@+id/g_label"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_weight="3"
@@ -179,6 +181,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                                android:id="@+id/b_label"
                             android:layout_marginTop="5dp"
                             android:layout_width="0dp"
                             android:layout_weight="3"

@@ -1,7 +1,10 @@
 package com.nezspencer.nuhiara.colourhub;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -11,18 +14,25 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 /**
  * Created by Nnabueze on 1/29/2016.
  */
 public class ColorMixActivity extends AppCompatActivity {
-    private Toolbar toolbar;
+    private static Toolbar toolbar;
     private ShareActionProvider actionProvider;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colour_mix);
+
+        if (getResources().getConfiguration().screenWidthDp<600)
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         context=getApplicationContext();
         toolbar=(Toolbar)findViewById(R.id.toolbar);
@@ -32,6 +42,7 @@ public class ColorMixActivity extends AppCompatActivity {
             getSupportActionBar().setLogo(R.mipmap.ic_launcher);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(R.string.app_name);
+            applyFontForToolbarTitle(this);
         }
         getSupportFragmentManager().beginTransaction().add(R.id.mix_frame,new ColorMixFragment()).commit();
     }
@@ -81,5 +92,21 @@ public class ColorMixActivity extends AppCompatActivity {
 
         shareIntent.setType("text/plain");
         return shareIntent;
+    }
+
+    public static void applyFontForToolbarTitle(Activity context){
+        /*Toolbar toolbar = (Toolbar) context.findViewById(R.id.a);*/
+        for(int i = 0; i < toolbar.getChildCount(); i++){
+            View view = toolbar.getChildAt(i);
+            if(view instanceof TextView){
+                TextView tv = (TextView) view;
+                Typeface titleFont = Typeface.
+                        createFromAsset(context.getAssets(), "Raleway-Medium.ttf");
+                if(tv.getText().equals(toolbar.getTitle())){
+                    tv.setTypeface(titleFont);
+                    break;
+                }
+            }
+        }
     }
 }

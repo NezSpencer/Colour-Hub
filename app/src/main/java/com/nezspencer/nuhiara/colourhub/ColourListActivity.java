@@ -1,7 +1,10 @@
 package com.nezspencer.nuhiara.colourhub;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -11,6 +14,8 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 
 /**
@@ -56,9 +61,15 @@ public class ColourListActivity extends AppCompatActivity
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setIcon(R.mipmap.ic_launcher);
             getSupportActionBar().setTitle(R.string.app_name);
+            applyFontForToolbarTitle(this);
 
 
         }
+
+        if (getResources().getConfiguration().smallestScreenWidthDp<600)
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 
 
@@ -162,6 +173,22 @@ public class ColourListActivity extends AppCompatActivity
 
 
         return false;
+    }
+
+    public void applyFontForToolbarTitle(Activity context){
+        /*Toolbar toolbar = (Toolbar) context.findViewById(R.id.a);*/
+        for(int i = 0; i < toolbar.getChildCount(); i++){
+            View view = toolbar.getChildAt(i);
+            if(view instanceof TextView){
+                TextView tv = (TextView) view;
+                Typeface titleFont = Typeface.
+                        createFromAsset(context.getAssets(), "Raleway-Medium.ttf");
+                if(tv.getText().equals(toolbar.getTitle())){
+                    tv.setTypeface(titleFont);
+                    break;
+                }
+            }
+        }
     }
 
 }

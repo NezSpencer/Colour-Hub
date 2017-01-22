@@ -1,9 +1,12 @@
 package com.nezspencer.nuhiara.colourhub;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
@@ -11,9 +14,11 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -27,9 +32,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -49,6 +55,7 @@ public class ColourHub extends AppCompatActivity {
     private static final String SHOULD_SHOW_TUTORIAL_DIALOG="yesOrNo";
     private static final int IMAGE_CAMERA =6;
     private static final int IMAGE_GALLERY=9;
+    private static final int RUNTIME_CAMERA=223;
     private ActionMode.Callback callback;
 
 
@@ -82,6 +89,8 @@ public class ColourHub extends AppCompatActivity {
     private boolean isBigScreen;
 
     Context context;
+    private Intent captureIntent;
+    private int mainWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,14 +98,22 @@ public class ColourHub extends AppCompatActivity {
         ApplicationVariables.getInstance();
         setContentView(R.layout.hub);
         context=this.getApplicationContext();
+        mainWidth=getResources().getDisplayMetrics().widthPixels;
+
+        ((TextView)findViewById(R.id.copyright_text))
+                .setTypeface(Typeface.createFromAsset(getAssets(), "Raleway-Medium.ttf"));
+
+        captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         findAndColourAllViews();
         makeInvisible();
         animateText();
 
+        Log.e("SizeP",""+getResources().getDisplayMetrics().densityDpi);
+
         FloatingActionButton.LayoutParams layoutParams=new FloatingActionButton.LayoutParams
-                ((int)getResources().getDimension(R.dimen.fab_size),
-                        (int)getResources().getDimension(R.dimen.fab_size), Gravity.CENTER);
+                (convertToPixels(75),convertToPixels(75),
+                Gravity.CENTER);
         layoutParams.setMargins(0, 0, 20, 20);
 
         ImageView icon=new ImageView(this);
@@ -108,32 +125,29 @@ public class ColourHub extends AppCompatActivity {
 
 
         int radius;
-        int dimension = 0;
+        int dimension;
         int innerRadius; // radius for captureColourButton sub-buttons
-        int innerDimension=0;
+        int innerDimension;
         if(getResources().getConfiguration().smallestScreenWidthDp<600)
         {
-            radius=200;
-            dimension =60;
-            innerRadius=70;
-            innerDimension=40;
+            radius=getResources().getDisplayMetrics().widthPixels *2/3;
+            dimension =convertToPixels(60);
+            innerRadius=convertToPixels(70);
+            innerDimension=convertToPixels(40);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
-            if (getResources().getDisplayMetrics().densityDpi>= DisplayMetrics.DENSITY_HIGH)
-            {
-                radius=300;
-                dimension =80;
-                innerDimension=60;
-                innerRadius=120;
-            }
+
+            Log.e("dimension "," is: "+dimension +" for "+getResources().getConfiguration()
+                    .screenWidthDp+ " pixels is: "+getResources().getDisplayMetrics().widthPixels);
         }
         else {
             isBigScreen=true;
-            radius = 350;
-            dimension =80;
-            innerDimension=60;
-            innerRadius=160;
+            radius = getResources().getDisplayMetrics().widthPixels *2/7;
+            dimension =convertToPixels(90);
+            innerDimension=convertToPixels(75);
+            innerRadius=convertToPixels(120);
+            Log.e("dimension "," is: "+dimension +" for "+getResources().getDisplayMetrics());
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
 
@@ -227,10 +241,16 @@ public class ColourHub extends AppCompatActivity {
 
                 menu.close(true);
                 actionMenu.close(true);
-                Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
                 if (captureIntent.resolveActivity(getPackageManager()) != null)
+                {
+                    if (Build.VERSION.SDK_INT <23)
                     startActivityForResult(captureIntent, IMAGE_CAMERA);
+                    else {
+                        versionMcamera();
+                    }
+                }
+
             }
         });
 
@@ -341,14 +361,15 @@ public class ColourHub extends AppCompatActivity {
             if (requestCode == IMAGE_CAMERA) {
                 Bundle imageData = data.getExtras();
                 snappedImage = (Bitmap) imageData.get("data");
-                String d = data.toUri(Intent.URI_ANDROID_APP_SCHEME);
-                Log.e("test", " snapped image location: " + d);
+
             }
-            View view = getLayoutInflater().inflate(R.layout.image_preview, null, false);
-            final LinearLayout preview = (LinearLayout) view.findViewById(R.id.imagePreview);
+            View view = getLayoutInflater().inflate(R.layout.layout_test, null, false);
+            final ImageView preview = (ImageView) view.findViewById(R.id.imagePreview);
             final TextView colourCode = (TextView) view.findViewById(R.id.preview_colour_code);
-            final Button cancel = (Button) view.findViewById(R.id.discard);
+            final ImageButton cancel = (ImageButton) view.findViewById(R.id.discard);
             final TextView colorPreview = (TextView) view.findViewById(R.id.previewColor);
+
+            colourCode.setTypeface(Typeface.createFromAsset(getAssets(), "Raleway-Medium.ttf"));
 
             final AlertDialog imagePopUp = new AlertDialog.Builder(this)
                     .setView(view)
@@ -367,27 +388,27 @@ public class ColourHub extends AppCompatActivity {
 
             Bitmap bitmap;
             if (isBigScreen) {
-                bitmap = getResizedBitmap(snappedImage, 500, 500);
+                bitmap = getResizedBitmap(snappedImage, mainWidth/3, mainWidth/3);
             } else if (getResources().getDisplayMetrics().densityDpi >= DisplayMetrics.DENSITY_HIGH &&
                     getResources().getConfiguration().smallestScreenWidthDp <= 320)
-                bitmap = getResizedBitmap(snappedImage, 400, 400);
+                bitmap = getResizedBitmap(snappedImage, mainWidth*5/6, mainWidth*2/3);
             else if (getResources().getConfiguration().smallestScreenWidthDp <= 320)
-                bitmap = getResizedBitmap(snappedImage, 280, 280);
+                bitmap = getResizedBitmap(snappedImage, mainWidth*5/6, mainWidth*2/3);
 
             else {
-                bitmap = getResizedBitmap(snappedImage, 400, 400);
+                bitmap = getResizedBitmap(snappedImage, mainWidth*5/6, mainWidth*2/3);
             }
 
             preview.setBackgroundDrawable(new BitmapDrawable(getResources(), bitmap));
 
 
-            preview.setOnTouchListener(new LinearLayout.OnTouchListener() {
+            preview.setOnTouchListener(new ImageView.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
 
                     int x = (int) motionEvent.getX();
                     int y = (int) motionEvent.getY();
-                    LinearLayout layout = (LinearLayout) view;
+                    ImageView layout = (ImageView) view;
                     Bitmap touchedPart = ((BitmapDrawable) layout.getBackground()).getBitmap();
 
                     if (x < touchedPart.getWidth() && x >= 0 && y < touchedPart.getHeight() && y >= 0) {
@@ -617,5 +638,56 @@ public class ColourHub extends AppCompatActivity {
         };
 
         return callback;
+    }
+
+    @TargetApi(23)
+    public void versionMcamera()
+    {
+        if(checkSelfPermission(Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{Manifest.permission.CAMERA},RUNTIME_CAMERA);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode==RUNTIME_CAMERA)
+        {
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            {
+                startActivityForResult(captureIntent, IMAGE_CAMERA);
+            }
+            else {
+                Toast.makeText(this,"Accept the camera permission to proceed",Toast.LENGTH_LONG).show();
+            }
+        }
+
+    }
+
+    public int convertToPixels(int mdpSize){
+
+        int density=getResources().getDisplayMetrics().densityDpi;
+
+        switch (density)
+        {
+            case DisplayMetrics.DENSITY_MEDIUM:
+                return mdpSize;
+
+            case DisplayMetrics.DENSITY_HIGH:
+                return mdpSize+((int) (mdpSize*0.5));
+
+
+            case DisplayMetrics.DENSITY_XHIGH:
+                return mdpSize*2;
+
+            case DisplayMetrics.DENSITY_XXHIGH:
+            case DisplayMetrics.DENSITY_XXXHIGH:
+                return (int) (mdpSize* 2.5);
+
+            default:
+                return mdpSize*2;
+        }
     }
 }

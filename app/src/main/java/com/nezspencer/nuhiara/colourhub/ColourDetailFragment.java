@@ -1,6 +1,7 @@
 package com.nezspencer.nuhiara.colourhub;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -185,11 +186,31 @@ public class ColourDetailFragment extends Fragment implements SeekBar.OnSeekBarC
         View rootView = inflater.inflate(R.layout.fragment_colour_detail, container, false);
         alphaSeekBar=(SeekBar)rootView.findViewById(R.id.alpha_level);
         TextView intensity_label=(TextView)rootView.findViewById(R.id.intensity_text);
+        intensity_label.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "Raleway-Medium.ttf"));
+
+        TextView transparency_level=(TextView)rootView.findViewById(R.id.label_transparency);
+        transparency_level.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "Raleway-Medium.ttf"));
+
         ColorSeekBar=(SeekBar)rootView.findViewById(R.id.colorIntensity);
         backLayout=(CardView)rootView.findViewById(R.id.back_layout);
         fore_layout=(FrameLayout)rootView.findViewById(R.id.fore_layout);
         argb_color=(TextView)rootView.findViewById(R.id.argb_color);
         rgb_color=(TextView)rootView.findViewById(R.id.rgb_color);
+
+        TextView rgbLabel=(TextView)rootView.findViewById(R.id.rgb_label);
+        TextView argbLabel=(TextView)rootView.findViewById(R.id.argb_label);
+        rgbLabel.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "Raleway-Medium.ttf"));
+        argbLabel.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "Raleway-Medium.ttf"));
+
+        argb_color.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "Raleway-Medium.ttf"));
+        rgb_color.setTypeface(Typeface.createFromAsset(getActivity().getAssets(),
+                "Raleway-Medium.ttf"));
+
         ColorSeekBar.setMax(colorShades.length - 1);
         if (isBlack)
         {

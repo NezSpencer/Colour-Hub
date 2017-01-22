@@ -1,6 +1,7 @@
 package com.nezspencer.nuhiara.colourhub;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -138,11 +139,28 @@ public class ColorMixFragment extends Fragment implements View.OnClickListener,S
         G_seekbar=(SeekBar)view.findViewById(R.id.colorG);
         B_seekbar=(SeekBar)view.findViewById(R.id.colorB);
         inputColor=(EditText)view.findViewById(R.id.input_colour);
+        inputColor.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
         renderButton=(CircularProgressButton)view.findViewById(R.id.btnWithText);
+        renderButton.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
         rgbColor=(TextView)view.findViewById(R.id.rgb_color);
+        rgbColor.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
         argbColor=(TextView)view.findViewById(R.id.argb_color);
+        argbColor.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
         screenLayout=(LinearLayout)view.findViewById(R.id.fore_layout);
         backLayout=(CardView)view.findViewById(R.id.back_layout);
+
+        ((TextView)view.findViewById(R.id.a_label))
+                .setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
+        ((TextView)view.findViewById(R.id.r_label))
+                .setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
+        ((TextView)view.findViewById(R.id.g_label))
+                .setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
+        ((TextView)view.findViewById(R.id.b_label))
+                .setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
+        ((TextView)view.findViewById(R.id.argb_label))
+                .setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
+        ((TextView)view.findViewById(R.id.rgb_label))
+                .setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Raleway-Medium.ttf"));
 
     }
 

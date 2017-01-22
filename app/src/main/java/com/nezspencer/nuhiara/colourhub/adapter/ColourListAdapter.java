@@ -1,6 +1,7 @@
 package com.nezspencer.nuhiara.colourhub.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,9 @@ public class ColourListAdapter extends ArrayAdapter<ApplicationVariables.DummyIt
         TextView colorName=(TextView)convertView.findViewById(R.id.color_name);
 
         colorName.setText(ApplicationVariables.getInstance().ITEMS.get(position).color_name);
+        colorName.setTypeface(Typeface.createFromAsset(context.getAssets(), "Raleway-Medium.ttf"));
+
+
         if (ApplicationVariables.getInstance().ITEMS.get(position).color_name.equalsIgnoreCase("black"))
             colorName.setTextColor(context.getResources().getColor(R.color.white));
 
